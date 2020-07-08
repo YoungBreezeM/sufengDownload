@@ -1,0 +1,54 @@
+
+
+.tool-btn {
+    -fx-background-radius: 20px;
+    -fx-background-color: #68fff8;
+    -fx-text-alignment: center;
+    -fx-font-weight: bold;
+    -fx-fill: White;
+}
+
+.tool-btn:hover{
+    -fx-effect: dropshadow(three-pass-box, #3835ff, 10, 0.5, 0, 0);
+    -fx-cursor: hand;
+    -fx-fill: black;
+}
+
+
+.view-pane{
+    -fx-background-color: rgb(245, 244, 248);
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, #312f31, 15, 0.5, 0, 5);
+}
+
+.tab-pane {
+    -fx-background-color: #b4b4b4;
+}
+/* 修改Tab的背景颜色 */
+.tab {
+    -fx-background-color: #333333;
+}
+/* 修改顶栏的背景颜色 */
+.tab-pane>*.tab-header-area>*.tab-header-background
+{
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, #333333;
+    -fx-border-color: #333333;
+}
+/* 修改Tab中文本的颜色 */
+.tab-label {
+    -fx-text-fill: #e6e6e6;
+}
+/* 子代选择器，Tab选中的时候选择其子元素tab-label */
+.tab:selected .tab-label {
+    -fx-text-fill: #262626;
+}
+/* tab选中时设置背景颜色 */
+.tab:selected {
+    -fx-background-color: #ecf2f0;
+}
+/* Tab选中的时候选中其边框并修改样式 */
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-radius: 0px;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-color: #ecf2f0;
+}

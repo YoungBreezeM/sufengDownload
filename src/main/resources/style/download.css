@@ -1,0 +1,16 @@
+.taskList{
+    -fx-border-color: #9a9b91;
+    -fx-border-radius: 5px;
+
+}
+.scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(44, 44, 44, 0.71);
+}
+.scroll-bar{
+    -fx-background-color: rgba(236, 235, 248, 0.35);
+}
+
+.scroll-pane {
+    -fx-background: #FFFFFF;
+
+}

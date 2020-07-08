@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fw.controller.Controller">
+   <children>
+      <TabPane prefHeight="569.0" prefWidth="1000.0" rotateGraphic="true" style="-fx-background-color: #fffdfe;" styleClass="jfx-tab-pane" stylesheets="@../style/main.css" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="toHome" text="首页">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="152.0" layoutY="42.0" text="开发不易，您的支持就是我最大动力，我需要你们的星星，有兴趣的同学可以一起来参与开发">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="428.0" fitWidth="735.0" layoutX="133.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/bg.png" />
+                           </image>
+                        </ImageView>
+                        <TextField alignment="CENTER" editable="false" layoutX="168.0" layoutY="406.0" prefHeight="24.0" prefWidth="605.0" style="-fx-background-color: none;" text="项目地址：https://github.com/YoungBreezeM/mutiThreadDownLoad">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </TextField>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="toDownload" onSelectionChanged="#initDownload" text="下载">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                      <fx:include fx:id="download" source="downloadView.fxml" />
+                  </children>
+              </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="toSetting" onSelectionChanged="#initSetting" text="设置">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <fx:include fx:id="setting" source="settingView.fxml" />
+                    </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

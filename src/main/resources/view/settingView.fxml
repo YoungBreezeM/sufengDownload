@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="settingPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fw.controller.SettingController">
+   <children>
+      <Label layoutX="218.0" layoutY="121.0" text="保存路径" />
+      <TextField fx:id="savePath" layoutX="305.0" layoutY="116.0" prefHeight="24.0" prefWidth="398.0" />
+      <Button fx:id="chooserPath" layoutX="659.0" layoutY="116.0" mnemonicParsing="false" onMouseClicked="#toChooserPath" text="路径" />
+      <TextField fx:id="workThread" layoutX="305.0" layoutY="163.0" prefHeight="24.0" prefWidth="398.0" />
+      <Label layoutX="218.0" layoutY="168.0" text="工作线程" />
+      <Label layoutX="218.0" layoutY="216.0" text="核心线程" />
+      <Label layoutX="218.0" layoutY="263.0" text="最大线程" />
+      <TextField fx:id="corePoolSize" layoutX="305.0" layoutY="211.0" prefHeight="24.0" prefWidth="398.0" />
+      <TextField fx:id="maximumPoolSize" layoutX="305.0" layoutY="258.0" prefHeight="24.0" prefWidth="398.0" />
+      <Label layoutX="218.0" layoutY="301.0" text="缓存空间" />
+      <TextField fx:id="numberOfBytes" layoutX="305.0" layoutY="296.0" prefHeight="24.0" prefWidth="398.0" />
+      <Button fx:id="save" layoutX="476.0" layoutY="370.0" mnemonicParsing="false" onMouseClicked="#saveSetting" text="保存设置" />
+   </children>
+</AnchorPane>

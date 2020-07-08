@@ -1,0 +1,6 @@
+savePath: "/home/yqf/下载"            #文件保存路径
+workThread: 10           #工作线程
+numberOfBytes: 1048576 #分段下载大小
+corePoolSize: 10        #核心线程数
+maximumPoolSize: 10      #最大线程数
+keepAliveTime: 5        #非核心线程保持时间
