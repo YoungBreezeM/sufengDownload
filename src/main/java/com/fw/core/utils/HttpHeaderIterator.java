@@ -1,4 +1,4 @@
-package com.fw.domain;
+package com.fw.core.utils;
 
 import java.net.HttpURLConnection;
 import java.util.HashMap;

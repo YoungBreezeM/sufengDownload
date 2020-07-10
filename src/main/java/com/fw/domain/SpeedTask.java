@@ -1,5 +1,6 @@
 package com.fw.domain;
 
+import com.fw.core.utils.NetSpeed;
 import javafx.concurrent.Task;
 
 import java.io.File;

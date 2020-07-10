@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -28,8 +29,15 @@ public class App extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource("style/main.css")).toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
+
+        primaryStage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
+
         primaryStage.show();
     }
+
+
 
 
     public static void main(String[] args) {

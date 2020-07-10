@@ -43,12 +43,5 @@ public class Controller  {
 
 
 
-    private void toBrowser(String url) {
 
-    }
-
-
-    public void toStart(MouseEvent mouseEvent) {
-
-    }
 }

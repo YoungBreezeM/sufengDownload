@@ -1,4 +1,4 @@
-package com.fw.domain;
+package com.fw.core.http;
 
 /**
  * @author yqf

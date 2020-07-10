@@ -1,15 +1,15 @@
-package com.fw.domain;
+package com.fw.core.utils;
 
 /**
  * @author yqf
  */
 public class NetSpeed {
 
-    private int bytes;
+    private long bytes;
 
     private int type = 0;
 
-    public NetSpeed(int bytes) {
+    public NetSpeed(long bytes) {
         this.bytes = bytes;
     }
 

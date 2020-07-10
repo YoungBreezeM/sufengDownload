@@ -1,32 +1,17 @@
 package com.fw.ui;
 
-import com.fw.domain.MultithreadingDownLoad;
-import com.fw.domain.NetSpeed;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ToolBar;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-
-import java.io.File;
-import java.nio.file.Path;
-import java.text.DecimalFormat;
-import java.util.concurrent.*;
+import javafx.scene.text.Font;
 
 /**
  * @author yqf
  */
-public class TaskDownload extends HBox {
+public class TaskDownload extends VBox {
 
 
     private Label taskName;
@@ -35,10 +20,20 @@ public class TaskDownload extends HBox {
 
     private Label speed;
 
+    private Label progress;
+
     private Button cancel;
 
     public Label getTaskName() {
         return taskName;
+    }
+
+    public Label getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Label progress) {
+        this.progress = progress;
     }
 
     public void setTaskName(Label taskName) {
@@ -79,8 +74,7 @@ public class TaskDownload extends HBox {
      * 设置样式
      */
     private void defaultStyle() {
-        this.setAlignment(Pos.CENTER_LEFT);
-        this.setSpacing(20);
+        this.setStyle("-fx-border-color: #9a9b91");
     }
 
     /**
@@ -93,8 +87,15 @@ public class TaskDownload extends HBox {
         this.progressBar.setPrefWidth(280);
         this.speed = new Label();
         this.cancel = new Button("取消");
+        this.progress = new Label();
+
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(this.progressBar,this.progress,this.speed);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.setSpacing(10);
+
         this.getChildren()
-                .addAll(taskName,progressBar,speed,cancel);
+                .addAll(this.taskName,hBox);
 
 
     }

@@ -1,5 +1,10 @@
 package com.fw.controller;
 
+import com.fw.core.domain.DownloadTask;
+
+import com.fw.core.domain.FileDownload;
+import com.fw.core.domain.ThreadPoolConfig;
+import com.fw.core.utils.NetSpeed;
 import com.fw.domain.*;
 import com.fw.factory.DownloadThreadFactory;
 
@@ -15,6 +20,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.concurrent.*;
 
@@ -28,14 +34,9 @@ public class DownloadController {
     @FXML
     public Button download;
     @FXML
-    public TextField serverPath;
-
-    private ThreadPoolExecutor threadPoolExecutor;
+    public TextField server;
 
     private Config config;
-
-    private int i=0;
-
 
 
     /**
@@ -43,36 +44,26 @@ public class DownloadController {
      */
     public void initData() {
         System.out.println("下载页面数据初始化成功");
-        LinkedBlockingQueue<Runnable> blockingQueue = new LinkedBlockingQueue<Runnable>();
-        DownloadThreadFactory downloadThreadFactory = new DownloadThreadFactory("download");
         Yaml yaml = new Yaml();
         InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("config.yml");
         config = yaml.loadAs(resourceAsStream, Config.class);
-        threadPoolExecutor = new ThreadPoolExecutor(
-                Integer.parseInt(config.getCorePoolSize()),
-                Integer.parseInt(config.getMaximumPoolSize()),
-                Integer.parseInt(config.getKeepAliveTime()),
-                TimeUnit.SECONDS,
-                blockingQueue,
-                downloadThreadFactory
-        );
+
 
     }
 
     @FXML
-    public void toDownload(MouseEvent mouseEvent) {
+    public void toDownload(MouseEvent mouseEvent) throws InterruptedException {
 
-        String url = serverPath.getText();
-        Yaml yaml = new Yaml();
-        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("config.yml");
-        Config config = yaml.loadAs(resourceAsStream, Config.class);
-        String fileName = url.substring(url.lastIndexOf("/") + 1);
+        String servePath = server.getText();
+        String fileName = servePath.substring(servePath.lastIndexOf("/") + 1);
         String filePath = config.getSavePath() + "/" + fileName;
         File file = new File(filePath);
 
         if (!file.exists()) {
             System.out.println("下载");
-            startDownload(url, filePath);
+
+            startDownload(fileName,servePath, filePath);
+
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("提示");
@@ -84,7 +75,7 @@ public class DownloadController {
                 System.out.println("删除文件");
                 if (file.delete()) {
                     System.out.println(file.getName() + " 文件已被删除！");
-                    startDownload(url, filePath);
+                    startDownload(fileName,servePath, filePath);
                 } else {
                     System.out.println("文件删除失败！");
                 }
@@ -96,51 +87,38 @@ public class DownloadController {
 
     }
 
-    private void startDownload(String path, String filePath) {
+    private void startDownload(String fileName,String servePath, String filePath) throws InterruptedException {
 
-        Download downLoad = new Download(path,filePath,Integer.parseInt(config.getNumberOfBytes()));
+        FileDownload fileDownload = new FileDownload(
+                servePath,
+                filePath,
+                ThreadPoolConfig.WORK_THREAD
+        );
 
 
-        MultithreadingDownLoad m = new MultithreadingDownLoad(threadPoolExecutor, Integer.parseInt(config.getWorkThread()),downLoad);
-        m.executeDownLoad();
-        Long fileLength = m.getFileLength();
-
-        Service<Integer> progressService = new Service<Integer>() {
+        Service<Integer> downloadService = new Service<Integer>() {
             @Override
             protected Task createTask() {
-                return new ProgressTask(filePath, fileLength);
-            }
-        };
-
-        Service<String> speedService = new Service<String>() {
-            @Override
-            protected Task<String> createTask() {
-                return new SpeedTask(filePath,fileLength);
+                return new DownloadTask(fileDownload);
             }
         };
 
         TaskDownload taskDownload = new TaskDownload();
-        ProgressBar progressBar = taskDownload.getProgressBar();
-        Label speed = taskDownload.getSpeed();
+        System.out.println(fileName);
 
-        speed.textProperty().bind(speedService.messageProperty());
-        speedService.restart();
+        taskDownload.getTaskName().setText(fileName);
+        taskDownload.getProgressBar().progressProperty().bind(downloadService.progressProperty());
+        taskDownload.getProgress().textProperty().bind(downloadService.messageProperty());
+        taskDownload.getSpeed().textProperty().bind(downloadService.titleProperty());
 
-        progressBar.progressProperty().bind(progressService.progressProperty());
-        progressService.restart();
+
+        downloadService.restart();
+
 
         taskList.getChildren().addAll(taskDownload);
 
 
-
-
-
-
-
-
-
     }
-
 
 
 }
