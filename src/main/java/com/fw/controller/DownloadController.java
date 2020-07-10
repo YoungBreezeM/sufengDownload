@@ -48,6 +48,7 @@ public class DownloadController {
         InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("config.yml");
         config = yaml.loadAs(resourceAsStream, Config.class);
 
+        System.out.println(config);
 
     }
 
@@ -92,7 +93,7 @@ public class DownloadController {
         FileDownload fileDownload = new FileDownload(
                 servePath,
                 filePath,
-                ThreadPoolConfig.WORK_THREAD
+                config.getWorkThread()
         );
 
 

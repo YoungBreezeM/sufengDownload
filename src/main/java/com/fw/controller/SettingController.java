@@ -53,10 +53,10 @@ public class SettingController {
         Config config = yaml.loadAs(resourceAsStream, Config.class);
 
         savePath.setText(config.getSavePath());
-        workThread.setText(config.getWorkThread());
-        corePoolSize.setText(config.getCorePoolSize());
-        numberOfBytes.setText(config.getNumberOfBytes());
-        maximumPoolSize.setText(config.getMaximumPoolSize());
+        workThread.setText(String.valueOf(config.getWorkThread()));
+        corePoolSize.setText(String.valueOf(config.getCorePoolSize()));
+        numberOfBytes.setText(String.valueOf(config.getNumberOfBytes()));
+        maximumPoolSize.setText(String.valueOf(config.getMaximumPoolSize()));
     }
 
     @FXML
@@ -77,20 +77,32 @@ public class SettingController {
 
         Config config = new Config(
                 savePath.getText(),
-                workThread.getText(),
-                numberOfBytes.getText(),
-                corePoolSize.getText(),
-                maximumPoolSize.getText(),
-                "5"
+                Integer.parseInt( workThread.getText()),
+                Integer.parseInt(numberOfBytes.getText()),
+                Integer.parseInt(corePoolSize.getText()),
+                Integer.parseInt(maximumPoolSize.getText()),
+                5
         );
 
-        System.out.println(config);
+        File file = new File(savePath.getText());
+        if(file.isDirectory()){
+            System.out.println(config);
 
-        yaml.dump(config, new FileWriter(filePath));
+            yaml.dump(config, new FileWriter(filePath));
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.titleProperty().set("信息");
-        alert.headerTextProperty().set("保存成功");
-        alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.titleProperty().set("信息");
+            alert.headerTextProperty().set("保存成功");
+            alert.showAndWait();
+        }else{
+            System.out.println("这不是一个目录!");
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.titleProperty().set("信息");
+            alert.headerTextProperty().set("保存失败,路径无法找到");
+            alert.showAndWait();
+        }
+
+
     }
 }

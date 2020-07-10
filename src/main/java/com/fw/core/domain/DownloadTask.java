@@ -8,7 +8,9 @@ import com.fw.core.utils.NetSpeed;
 import com.fw.domain.*;
 import com.fw.factory.DownloadThreadFactory;
 import javafx.concurrent.Task;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -32,21 +34,26 @@ public class DownloadTask extends Task {
 
     private DownloadThreadFactory downloadThreadFactory = new DownloadThreadFactory("sync-download");
 
-    private ThreadPoolExecutor executor = new ThreadPoolExecutor(
-            ThreadPoolConfig.CORE_POOL_SIZE,
-            ThreadPoolConfig.MAXIMUM_POOL_SIZE,
-            ThreadPoolConfig.KEEP_ALIVE_TIME,
-            TimeUnit.SECONDS,
-            blockingQueue,
-            downloadThreadFactory
-    );
+    private ThreadPoolExecutor executor ;
 
     public DownloadTask(FileDownload fileDownload) {
 
         this.fileDownload = fileDownload;
+        Yaml yaml = new Yaml();
+        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("config.yml");
+        Config config = yaml.loadAs(resourceAsStream, Config.class);
+
+       executor = new ThreadPoolExecutor(
+                config.getCorePoolSize(),
+                config.getMaximumPoolSize(),
+                config.getKeepAliveTime(),
+                TimeUnit.SECONDS,
+                blockingQueue,
+                downloadThreadFactory
+        );
     }
 
-    public void download() {
+    private void download() {
         try {
             URL url = new URL(fileDownload.getServerPath());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
